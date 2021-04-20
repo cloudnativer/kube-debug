@@ -1,0 +1,37 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-debug
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-debug
+  template:
+    metadata:
+      labels:
+        app: kube-debug
+    spec:
+#      nodeSelector:
+#        kubernetes.io/hostname: 192.168.1.13
+      containers:
+      - name: kube-debug
+        image: cloudnativer/kube-debug:v0.1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3080
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: timezone
+          readOnly: true
+      hostNetwork: true
+      hostIPC: true
+      hostPID: true
+      volumes:
+      - name: timezone
+        hostPath:
+          path: /etc/localtime
+
+
