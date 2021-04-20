@@ -7,6 +7,8 @@
 
 <br>
 
+
+```
   Initialize the kube-debug environment 
     kube-debug -init 
   Debug the local host 
@@ -15,6 +17,7 @@
     kube-debug -container "9a64c7a0d6bd" -hostport 38080 
   Query the container ID and kubernetes node IP of 'test-6bfb69dc64-hdblq' pod in 'testns' namespace 
     kube-debug -show "test-6bfb69dc64-hdblq" -namespace "testns" -kubeconfig "/etc/kubernetes/pki/kubectl.kubeconfig" 
+```
 
 
 Use the browser to access http://hostIP:3080
