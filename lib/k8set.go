@@ -24,7 +24,7 @@ func k8sClientSet(kubeConfig string) *kubernetes.Clientset {
 }
 
 // Get Pod containerID
-func GetPod(podName string, nameSpace string, kubeConfig string) (string, string) {
+func GetPod(podName string, nameSpace string, kubeConfig string) (string, string, string) {
         ctx := context.TODO()
         getresult, err := k8sClientSet(kubeConfig).CoreV1().Pods(nameSpace).Get(ctx, podName, metav1.GetOptions{})
         if err != nil {
@@ -33,7 +33,7 @@ func GetPod(podName string, nameSpace string, kubeConfig string) (string, string
         //fmt.Println(getresult.Status.ContainerStatuses[0].ContainerID[9:])
         //fmt.Println(getresult.Status.HostIP)
         //containerID := "7af8850a10339c2b5799d627d6324d007008a214f32f39ec21b3304a10c01b23"
-        return getresult.Status.HostIP,getresult.Status.ContainerStatuses[0].ContainerID[9:]
+        return getresult.Status.HostIP,getresult.Status.PodIP,getresult.Status.ContainerStatuses[0].ContainerID[9:]
 }
 
 

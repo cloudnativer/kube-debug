@@ -13,7 +13,7 @@ kube-debug:
 kube-debug-image:
 	@echo Start making container image.
 	docker build --network=$(NET_MODE) -t $(IMAGE_TAG):$(VERSION) .
-	docker save $(IMAGE_TAG):$(VERSION) -o images/$(NAME)-container-image.tar
+	docker save $(IMAGE_TAG):$(VERSION) -o $(NAME)-container-image.tar
 	@echo The image is finished, Please use $(IMAGE_TAG):$(VERSION)
 
 

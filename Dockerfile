@@ -8,12 +8,10 @@ ENV HOSTNAME kube-debug
 # Installing debug tools
 
 
-COPY bin/calicoctl /usr/local/bin/calicoctl
 COPY bin/ctop /usr/local/bin/ctop
 COPY bin/etcdctl /usr/local/bin/etcdctl
-COPY bin/kubectl /usr/local/bin/kubectl
 COPY bin/termshark /usr/local/bin/termshark
-COPY bin/ttyd /usr/local/bin/ttyd
+COPY bin/kube-debug-ttyd /usr/local/bin/kube-debug-ttyd
 
 RUN set -ex \
     && echo "http://nl.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
@@ -78,5 +76,5 @@ COPY config/bashrc /root/.bashrc
 COPY config/motd /etc/motd
 
 # Running
-CMD ["ttyd","-p","3080","bash"]
+CMD ["kube-debug-ttyd","-p","3080","bash"]
 

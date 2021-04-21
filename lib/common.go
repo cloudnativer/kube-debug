@@ -5,7 +5,7 @@ import (
     "os"
     "os/exec"
     "io"
-//    "io/ioutil"
+    "io/ioutil"
     "log"
     "strings"
 )
@@ -45,6 +45,20 @@ func CheckSoft(softname string) {
     }
 }
 
+func CheckSshLogin(nodeIP string, hostUsername string, hostHomedir string){
+    out,_ := ShellOutput("ssh "+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"ls\" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
+    if out != "ok\n" {
+        _, err := os.Stat(hostHomedir+"/.ssh/id_rsa")
+        if err != nil {
+            if os.IsNotExist(err) {
+                ShellExecute("ssh-keygen -t rsa -P '' -f "+hostHomedir+"/.ssh/id_rsa")
+            }
+        }
+        fmt.Println("Please wait and enter the password of the target k8s-node host,")
+        ShellExecute("ssh-copy-id -p 22 "+hostUsername+"@"+nodeIP+" >/dev/null 2>&1")
+    }
+}
+
 func ShellAsynclog(reader io.ReadCloser) error {
     cache := "" //Cache less than one line of log information
     buf := make([]byte, 2048)
@@ -81,8 +95,22 @@ func ShellExecute(shellfile string) error {
     return nil
 }
 
+func ShellOutput(strCommand string)(string, error){
+    cmd := exec.Command("/bin/bash", "-c", strCommand) 
+    stdout, _ := cmd.StdoutPipe()
+    if err := cmd.Start(); err != nil{
+        return "",err
+    }
+    out_bytes, _ := ioutil.ReadAll(stdout)
+    stdout.Close()
+    if err := cmd.Wait(); err != nil {
+        return "",err
+    }
+    return string(out_bytes),nil
+}
+
 func ShowHelp(){
-    fmt.Println("Usage of kube-debug: kube-debug [COMMAND] { [OBJECT] [ARGS]... } \n\nCOMMAND: \n  init          Initialize the kube-debug environment. \n  localhost     Debug the local host. \n  container     Set the target container ID or container name to be debugged. \n  show          Set the kubernetes pod name to query. \n\nOBJECT: \n  hostport      Custom debug container in the local debugging listening port (the default is TCP 3080 port). (default 3080) \n  namespace     Set the namespace of kubernetes pod to be queried. \n  kubeconfig    Set the kubeconfig file path of kubernetes cluster to be queried. \n\nEXAMPLE: \n  Initialize the kube-debug environment \n    kube-debug -init \n  Debug the local host \n    kube-debug -localhost \n  Debug the target container (container ID is '9a64c7a0d6bd') and open the debug port of tcp-38080 on the local host \n    kube-debug -container \"9a64c7a0d6bd\" -hostport 38080 \n  Query the container ID and kubernetes node IP of 'test-6bfb69dc64-hdblq' pod in 'testns' namespace \n    kube-debug -show \"test-6bfb69dc64-hdblq\" -namespace \"testns\" -kubeconfig \"/etc/kubernetes/pki/kubectl.kubeconfig\" \n")
+    fmt.Println("Usage of kube-debug: kube-debug [COMMAND] { [OBJECT] [ARGS]... } \n\nCOMMAND: \n  init          Initialize the kube-debug environment. \n  localhost     Debug the local host. \n  container     Set the target container ID or container name to be debugged. \n  pod           Set the kubernetes pod name to query.\n  node          Set the kubernetes node IP to query. \n  clear         Clean up the local host debugging environment. \n  version       View software version information. \n  help          View usage help information. \n\nOBJECT: \n  hostport      Custom debug kubernetes node in the local debugging listening port (the default is TCP 3080 port). \n  namespace     Set the namespace of kubernetes pod to be queried. \n  kubeconfig    Set the kubeconfig file path of kubernetes cluster to be queried. \n\nEXAMPLE: \n  (1) Initialize the kube-debug environment: \n          kube-debug -init \n  (2) Debug the local host: \n          kube-debug -localhost \n  (3) Debug the target container (container ID is '9a64c7a0d6bd') on the local host: \n          kube-debug -container \"9a64c7a0d6bd\" \n  (4) Debug the target k8s-node host (IP is 192.168.1.13), and the custom debug listening port is 38080: \n          kube-debug -node \"192.168.1.13\" -hostport 38080 \n  (5) Debug the pod 'test-6bfb69dc64-hdblq' in the 'testns' namespace: \n          kube-debug -pod \"test-6bfb69dc64-hdblq\" -namespace \"testns\" -kubeconfig \"/etc/kubernetes/pki/kubectl.kubeconfig\" \n  (6) Clean up the local host debugging environment: \n          kube-debug -clear \n")
 }
 
 func ShowVersion(){
