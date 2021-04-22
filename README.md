@@ -140,11 +140,11 @@ Now you can use a web browser to access `xxxxx` and enter the Visual Web UI for 
 ## 2.3 Debug the any kubernetes node
 
 <br>
-We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node. Let's debug the kubernetes node with IP `192.168.1.13` , We can perform the following command operations:<br>
+We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node. Let's debug the kubernetes node with IP `192.168.1.12` , We can perform the following command operations:<br>
 
 ```
 # cd ~/kube-debug/
-# ./kube-debug -node "192.168.1.13"
+# ./kube-debug -node "192.168.1.12"
 ```
 
 After the command is executed, the following information will be displayed:
