@@ -61,7 +61,7 @@ After the command is executed, the following information will be displayed:
 df02e84f5233e01309f3188d3ab5622df1c495d0c8b5f2c68247856d9c552625
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://Localhost's IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
+        (1) Using a web browser to access http://Localhost's_IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
         (2) Use the command to debug directly on the local host: docker exec -it kube-debug-localhost /bin/bash 
 ```
 
@@ -142,7 +142,7 @@ After the command is executed, the following information will be displayed:
 df02e84f5233e01309f3188d3ab5622df1c495d0c8b5f2c68247856d9c552625
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://Localhost's IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
+        (1) Using a web browser to access http://Localhost's_IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
         (2) Use the command to debug directly on the local host: docker exec -it kube-debug-localhost /bin/bash 
 ```
 
@@ -198,7 +198,7 @@ kube-debug Debugging environment initialization completed!
 0d1e548b7f6012dea80e2ccadb8b6ba874fcf20a1a4b914469093e88f85905e3
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://k8s-node's IP:3080 Debug! (Recommended URL: http://192.168.1.13:3080)
+        (1) Using a web browser to access http://k8s-node's_IP:3080 Debug! (Recommended URL: http://192.168.1.13:3080)
         (2) Login to the target k8s-node host (192.168.1.13), debugging with commands: docker exec -it kube-debug-node-192.168.1.13 /bin/bash 
 ```
 
@@ -231,7 +231,7 @@ kube-debug Debugging environment initialization completed!
 4d6b52c485c4c9a5c10c2dffc2c322562acfee6ca73d3e94fd893efddfe36a91
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://k8s-pod's IP:3080 Debug! (Recommended URL: http://10.244.96.6:3080)
+        (1) Using a web browser to access http://k8s-pod's_IP:3080 Debug! (Recommended URL: http://10.244.96.6:3080)
         (2) Login to the target k8s-node host (192.168.1.15), debugging with commands: docker exec -it kube-debug-pod-test-6bfb69dc64-hdblq /bin/bash 
 ```
 
