@@ -90,7 +90,7 @@ Now you can use a web browser to access `http://192.168.1.12:3080` and enter the
 |  root@localhost:~ #                                                                                     |||
 |  root@localhost:~ #                                                                                     |||
 |  root@localhost:~ #                                                                                     |||
-|  root@localhost:~ #  |                                                                                  | |
+|  root@localhost:~ # iptraf-ng |                                                                         | |
 =============================================================================================================
 ```
 
