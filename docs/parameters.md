@@ -1,4 +1,19 @@
-
+<center><font size=5>Parameter introduction of kube-debug</font></center><br>
+<br>
+<b>Introduction:</b><br>
+<br>
+The parameters about kube-debug can be viewed using the `kube-debug -help` command. <br>
+<table width=100%>
+<tr><td>
+ 
+ ```
+  # kube-debug -help
+ ```
+  
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
+  
 ```
 
 Usage of kube-debug: kube-debug [COMMAND] { [OBJECT] [ARGS]... } 
@@ -18,7 +33,14 @@ OBJECT:
   namespace     Set the namespace of kubernetes pod to be queried. 
   kubeconfig    Set the kubeconfig file path of kubernetes cluster to be queried. 
 
-EXAMPLE: 
+```
+
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
+
+```
+For example：
   (1) Initialize the kube-debug environment: 
           kube-debug -init 
   (2) Debug the local host: 
@@ -32,7 +54,13 @@ EXAMPLE:
   (6) Clean up the local host debugging environment: 
           kube-debug -clear 
 
-
-
 ```
+
+</td></tr>
+<tr><td></td></tr>
+</table>
+<br>
+<br>
+<br>
+
 
