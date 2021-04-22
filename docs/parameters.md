@@ -2,7 +2,7 @@
 <br>
 <b>Introduction:</b><br>
 <br>
-The parameters about kube-debug can be viewed using the `kube-debug -help` command. <br>
+The parameters about kube-debug can be viewed using the  `kube-debug -help`  command. <br>
 <table width=100%>
 <tr><td>
  
