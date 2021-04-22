@@ -4,10 +4,9 @@ A toolbox for debugging Docker container and Kubernetes with visual web UI.
 
 ![kube-debug](docs/imgs/kube-debug-logo.jpg)
 
-<br>
 
 
-# [1] Quick start?
+# [1] Quick start
 
 <br>
 
@@ -29,7 +28,7 @@ For example, we have downloaded the `kube-debug-x86-v0.1.0.tgz` package.<br>
 
 <br>
 
-## 1.2 Initialize the kube-debug environment:
+## 1.2 Initialize the kube-debug environment
 
 <br>
 Execute the following command to initialize the local debug environment: <br>
