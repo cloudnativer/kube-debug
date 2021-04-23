@@ -61,7 +61,7 @@ The list of debugging tools integrated by kube-debug is as follows:
 
 ```
 
-We are constantly improving. 
+We are constantly improving... 
 <br>
-Welcome to contribute.
+Welcome to contribute !
 <br>
