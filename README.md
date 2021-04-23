@@ -157,7 +157,7 @@ We can use `kube-debug -container <container id or container name>` to debug the
 
 ```
 # cd ~/kube-debug/
-# ./kube-debug -container "a1aa35697643"
+# ./kube-debug -container "a1aa35697643" -debugport 38080
 ```
 
 After the command is executed, the following information will be displayed:
@@ -166,11 +166,11 @@ After the command is executed, the following information will be displayed:
 efa3cc35dd414e4217c880fe269f375cd512fe4f5122e0ccc39719c83d8c30e1
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://Container's_IP:3080 Debug! (you can use the 'docker inspect' command to view the container's IP) 
+        (1) Using a web browser to access http://Localhost's_IP:38080 Debug! (Recommended URL: http://192.168.1.12:38080) 
         (2) Use the command to debug directly on the local host: docker exec -it kube-debug-container-a1aa35697643 /bin/bash 
 ```
 
-Now you can use a web browser to access `http://Container's_IP:3080` and enter the Visual Web UI for debugging. You can also use the `docker exec -it kube-debug-container-a1aa35697643 /bin/bash` command to directly log in to the debugging container for debugging.<br>
+Now you can use a web browser to access `http://192.168.1.12:38080` and enter the Visual Web UI for debugging. You can also use the `docker exec -it kube-debug-container-a1aa35697643 /bin/bash` command to directly log in to the debugging container for debugging.<br>
 
 <br>
 
@@ -182,7 +182,7 @@ We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node.
 
 ```
 # cd ~/kube-debug/
-# ./kube-debug -node "192.168.1.13"
+# ./kube-debug -node "192.168.1.13" -debugport 38081
 ```
 
 After the command is executed, the following information will be displayed:
@@ -197,11 +197,11 @@ kube-debug Debugging environment initialization completed!
 0d1e548b7f6012dea80e2ccadb8b6ba874fcf20a1a4b914469093e88f85905e3
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://k8s-node's_IP:3080 Debug! (Recommended URL: http://192.168.1.13:3080)
+        (1) Using a web browser to access http://k8s-node's_IP:38081 Debug! (Recommended URL: http://192.168.1.13:38081)
         (2) Login to the target k8s-node host (192.168.1.13), debugging with commands: docker exec -it kube-debug-node-192.168.1.13 /bin/bash 
 ```
 
-Now you can use a web browser to access `http://192.168.1.13:3080` and enter the Visual Web UI for debugging. You can also Login to the target k8s-node host (192.168.1.13), debugging with commands `docker exec -it kube-debug-node-192.168.1.13 /bin/bash` .<br>
+Now you can use a web browser to access `http://192.168.1.13:38081` and enter the Visual Web UI for debugging. You can also Login to the target k8s-node host (192.168.1.13), debugging with commands `docker exec -it kube-debug-node-192.168.1.13 /bin/bash` .<br>
 
 <br>
 
@@ -213,7 +213,7 @@ We can use `kube-debug -pod <pod name> -namespace <namespace> -kubeconfig <kubec
 
 ```
 # cd ~/kube-debug/
-# ./kube-debug -pod "test-6bfb69dc64-hdblq" -namespace "testns" -kubeconfig "/etc/kubernetes/pki/kubectl.kubeconfig"
+# ./kube-debug -pod "test-6bfb69dc64-hdblq" -namespace "testns" -kubeconfig "/etc/kubernetes/pki/kubectl.kubeconfig" -debugport 38082
 ```
 
 After the command is executed, the following information will be displayed:
@@ -230,11 +230,11 @@ kube-debug Debugging environment initialization completed!
 4d6b52c485c4c9a5c10c2dffc2c322562acfee6ca73d3e94fd893efddfe36a91
 
 Notice: You can now enter the debugging interface in the following two ways:
-        (1) Using a web browser to access http://k8s-pod's_IP:3080 Debug! (Recommended URL: http://10.244.96.6:3080)
+        (1) Using a web browser to access http://k8s-node's_IP:38082 Debug! (Recommended URL: http://192.168.1.15:38082)
         (2) Login to the target k8s-node host (192.168.1.15), debugging with commands: docker exec -it kube-debug-pod-test-6bfb69dc64-hdblq /bin/bash 
 ```
 
-Now you can use a web browser to access `http://10.244.96.6:3080` and enter the Visual Web UI for debugging. You can also Login to the target k8s-node host (192.168.1.15), debugging with commands `docker exec -it kube-debug-pod-test-6bfb69dc64-hdblq /bin/bash` .
+Now you can use a web browser to access `http://192.168.1.15:38082` and enter the Visual Web UI for debugging. You can also Login to the target k8s-node host (192.168.1.15), debugging with commands `docker exec -it kube-debug-pod-test-6bfb69dc64-hdblq /bin/bash` .
 
 <br>
 <br>
