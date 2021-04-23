@@ -190,7 +190,7 @@ After the command is executed, the following information will be displayed:
 ```
 Preparing kube-debug environment, Please wait! 
 
-Loaded image: houshijun/kube-debug:v0.1.0
+Loaded image: cloudnativer/kube-debug:v0.1.0
 
 kube-debug Debugging environment initialization completed!
 
@@ -223,7 +223,7 @@ Preparing kube-debug environment, Please wait!
 
 Please wait and enter the password of the target k8s-node host,
 root@192.168.122.52's password: <Enter Password>
-Loaded image: houshijun/kube-debug:v0.1.0
+Loaded image: cloudnativer/kube-debug:v0.1.0
 
 kube-debug Debugging environment initialization completed!
 
