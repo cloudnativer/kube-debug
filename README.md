@@ -188,7 +188,7 @@ We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node.
 After the command is executed, the following information will be displayed:
 
 ```
-Preparing kube-debug environment, Please wait! 
+Preparing kube-debug environment, Please wait... 
 
 Loaded image: cloudnativer/kube-debug:v0.1.0
 
@@ -219,7 +219,7 @@ We can use `kube-debug -pod <pod name> -namespace <namespace> -kubeconfig <kubec
 After the command is executed, the following information will be displayed:
 
 ```
-Preparing kube-debug environment, Please wait! 
+Preparing kube-debug environment, Please wait... 
 
 Please wait and enter the password of the target k8s-node host,
 root@192.168.122.52's password: <Enter Password>
