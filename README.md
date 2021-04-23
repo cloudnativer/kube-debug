@@ -97,7 +97,7 @@ Here we can easily do visual debugging, Automatically complete the command line,
 
 ![kube-debug](docs/imgs/kube-debug-ui-02.jpg)
 
-For the list of tools integrated by `kube-debug` , <a href="docs/toollist.md">please click this link</a>.<br>
+For more tool list information of `kube-debug` integration , <a href="docs/toollist.md">please click this link</a>.<br>
 
 In addition, we can also use the `docker exec -it kube-debug-localhost /bin/bash` command to directly log in to the debugging container for debugging.
 
@@ -271,7 +271,7 @@ The parameters about kube-debug can be viewed using the `kube-debug -help` comma
 
 <br>
 
-For the list of tools integrated by `kube-debug` , <a href="docs/toollist.md">please click this link</a>.<br>
+For more tool list information of `kube-debug` integration , <a href="docs/toollist.md">please click this link</a>.
 
 <br>
 <br>
