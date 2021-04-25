@@ -1,6 +1,11 @@
 # How to build it?
 <br>
-Use the following command to download the code locally:
+
+First, make sure the docker and git commands are installed locally.
+
+<br>
+
+Then, use the following command to download the code locally:
 
 ```
 # git clone https://github.com/cloudnativer/kube-debug.git

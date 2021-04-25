@@ -10,6 +10,8 @@ import (
     "log"
     "strconv"
     "strings"
+
+    "golang.org/x/crypto/ssh/terminal"
 )
 
 
@@ -41,7 +43,7 @@ func CheckPortExist(port int) {
     }
     defer listener.Close()
     //Determine whether the port already exists in the iptables rule.
-    iptablesPort,_ := ShellOutput("iptables -S -t nat | grep \"dport "+strconv.Itoa(port)+" -m\" ")
+    iptablesPort,_ := ShellOutput("sudo iptables -S -t nat | grep \"dport "+strconv.Itoa(port)+" -m\" ")
     if iptablesPort != "" {
         panic("debugport "+address+" is taken, please select another port!")
     }
@@ -59,27 +61,51 @@ func CheckFileExist(filename string) {
 }
 
 func CheckSoft(softname string) {
-    cmd,err := exec.Command("sh","-c","type "+softname+" >/dev/null 2>&1 || { echo 'n'; }").Output()
+    cmd,err := ShellOutput("command -v "+softname+" >/dev/null 2>&1 || { echo 'notok'; }")
     CheckErr(err)
-    if string(cmd) != "" {
-        if string(cmd[0]) == "n" {
-            panic("\""+softname+"\" Component not installed, please manually install component or contact administrator!")
-        }
+    if cmd != "" {
+        panic("\""+softname+"\" Component not installed, please manually install component or contact administrator!")
     }
 }
 
-func CheckSshLogin(nodeIP string, hostUsername string, hostHomedir string){
-    out,_ := ShellOutput("ssh "+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"ls\" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
-    if out != "ok\n" {
+func CheckSshLoginSudo(nodeIP string, hostUsername string, hostHomedir string)(string){
+    sshLoginOut,_ := ShellOutput("ssh "+hostUsername+"@"+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"ls\" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
+    if sshLoginOut != "ok\n" {
         _, err := os.Stat(hostHomedir+"/.ssh/id_rsa")
         if err != nil {
             if os.IsNotExist(err) {
                 ShellExecute("ssh-keygen -t rsa -P '' -f "+hostHomedir+"/.ssh/id_rsa")
             }
         }
-        fmt.Println("Please wait and enter the password of the target k8s-node host,")
+        fmt.Println("Warning: If you don't get through the local ssh key to the target k8s-node ("+nodeIP+"), please wait and enter the password for target k8s-node!\nPlease wait a moment...")
         ShellExecute("ssh-copy-id -p 22 "+hostUsername+"@"+nodeIP+" >/dev/null 2>&1")
     }
+    fmt.Println("Checking target k8s-node ("+nodeIP+"), please wait...")
+    var sudoStr string
+    if hostUsername != "root" {
+        sshSudoOut,_ := ShellOutput("ssh "+hostUsername+"@"+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"sudo ls \" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
+        if sshSudoOut != "ok\n" {
+            fmt.Println("\nWarning: If you do not use the root account, please make sure that the account you are using has sudo permission without entering a password ! \n")
+            fmt.Printf("[sudo] password for "+nodeIP+": ")
+            passwd,_ := terminal.ReadPassword(0)
+            passwdStr := string(passwd[:])
+            fmt.Println("\n")
+            sudoStr = "echo \""+passwdStr+"\" | sudo -S"
+        } else {
+            sudoStr = "sudo"
+        }
+    }
+    return sudoStr
+}
+
+func GenerateRemoteCheck(nodeIP string, hostUsername string, dir string,port int) {
+    checkShellFile, err1 := os.Create(dir+"/kube-debug-init.sh")
+    CheckErr(err1)
+    defer checkShellFile.Close()
+    checkShellFile.WriteString(" if [ \"`command -v iptables >/dev/null 2>&1 || { echo 'notok'; }`\" == \"notok\" ]; then \n    echo \"iptables Component not installed, please manually install component or contact administrator!\" && exit 1 \n fi \n if [ \"`command -v docker >/dev/null 2>&1 || { echo 'notok'; }`\" == \"notok\" ]; then \n    echo \"docker Component not installed, please manually install component or contact administrator!\" && exit 1 \n fi \n if [ \"`command -v lsof >/dev/null 2>&1 || { echo 'notok'; }`\" == \"notok\" ]; then \n    echo \"lsof Component not installed, please manually install component or contact administrator!\" && exit 1 \n fi \n if [ `lsof -i:"+strconv.Itoa(port)+" | wc -l` -ne 0 ] || [ `iptables -S -t nat | grep -w '"+strconv.Itoa(port)+"' | wc -l ` -ne 0 ] ; then \n    echo 'debugport "+strconv.Itoa(port)+" is taken, please select another port!' && exit 1 \n fi \n docker load < /tmp/kube-debug-container-image.tar  >/dev/null 2>&1 \n ")
+    err2 := os.Chmod(dir+"/kube-debug-init.sh", 0755)
+    CheckErr(err2)
+    ShellExecute("scp "+dir+"/kube-debug* "+hostUsername+"@"+nodeIP+":/tmp/")
 }
 
 func ShellAsynclog(reader io.ReadCloser) error {
@@ -101,8 +127,9 @@ func ShellAsynclog(reader io.ReadCloser) error {
     return nil
 }
  
-func ShellExecute(shellfile string) error {
+func ShellExecute(shellfile string)(error){
     cmd := exec.Command("sh", "-c", shellfile)
+    //fmt.Println(cmd)
     stdout, _ := cmd.StdoutPipe()
     stderr, _ := cmd.StderrPipe()
     if err := cmd.Start(); err != nil {
@@ -120,6 +147,7 @@ func ShellExecute(shellfile string) error {
 
 func ShellOutput(strCommand string)(string, error){
     cmd := exec.Command("/bin/bash", "-c", strCommand) 
+    //fmt.Println(cmd)
     stdout, _ := cmd.StdoutPipe()
     if err := cmd.Start(); err != nil{
         return "",err
@@ -130,14 +158,6 @@ func ShellOutput(strCommand string)(string, error){
         return "",err
     }
     return string(out_bytes),nil
-}
-
-func ShowHelp(){
-    fmt.Println("Usage of kube-debug: kube-debug [COMMAND] { [OBJECT] [ARGS]... } \n\nCOMMAND: \n  init          Initialize the kube-debug environment. \n  localhost     Debug the local host(Listen to TCP-3080 port by default, and the debugport can be modified by '-debug' parameter). \n  container     Set the target container ID or container name to be debugged. \n  pod           Set the kubernetes pod name to query.\n  node          Set the kubernetes node IP to query. \n  clear         Clean up the local host debugging environment. \n  version       View software version information. \n  help          View usage help information. \n\nOBJECT: \n  debugport     Set the debug listening port on the host. \n  namespace     Set the namespace of kubernetes pod to be queried. \n  kubeconfig    Set the kubeconfig file path of kubernetes cluster to be queried. \n\nEXAMPLE: \n  (1) Initialize the kube-debug environment: \n          kube-debug -init \n  (2) Debug the local host: \n          kube-debug -localhost \n  (3) Debug the target container (container ID is '9a64c7a0d6bd') on the local host, and set the debug listening port is TCP-38080: \n          kube-debug -container \"9a64c7a0d6bd\" -debugport 38080 \n  (4) Debug the target k8s-node host (IP is 192.168.1.13), and set the debug listening port is TCP-38081: \n          kube-debug -node \"192.168.1.13\" -debugport 38081 \n  (5) Debug the pod 'test-6bfb69dc64-hdblq' in the 'testns' namespace, and set the debug listening port is TCP-38082: \n          kube-debug -pod \"test-6bfb69dc64-hdblq\" -namespace \"testns\" -kubeconfig \"/etc/kubernetes/pki/kubectl.kubeconfig\" -debugport 38082 \n  (6) Clean up the local host debugging environment: \n          kube-debug -clear \n")
-}
-
-func ShowVersion(){
-    fmt.Println("Version 0.1.0 \nRelease Date: 4/23/2021 \n")
 }
 
 

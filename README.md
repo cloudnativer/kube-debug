@@ -97,8 +97,6 @@ Here we can easily do visual debugging, Automatically complete the command line,
 
 ![kube-debug](docs/imgs/kube-debug-ui-02.jpg)
 
-For more tool list information of `kube-debug` integration , <a href="docs/toollist.md">please click this link</a>.<br>
-
 In addition, we can also use the `docker exec -it kube-debug-localhost /bin/bash` command to directly log in to the debugging container for debugging.
 
 ```
@@ -190,7 +188,7 @@ We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node.
 After the command is executed, the following information will be displayed:
 
 ```
-Preparing kube-debug environment, Please wait... 
+Preparing kube-debug environment, Please wait! 
 
 Loaded image: cloudnativer/kube-debug:v0.1.0
 
@@ -221,7 +219,7 @@ We can use `kube-debug -pod <pod name> -namespace <namespace> -kubeconfig <kubec
 After the command is executed, the following information will be displayed:
 
 ```
-Preparing kube-debug environment, Please wait... 
+Preparing kube-debug environment, Please wait! 
 
 Please wait and enter the password of the target k8s-node host,
 root@192.168.122.52's password: <Enter Password>
@@ -267,16 +265,7 @@ The parameters about kube-debug can be viewed using the `kube-debug -help` comma
 <br>
 <br>
 
-# [5] Integrated tool list
-
-<br>
-
-For more tool list information of `kube-debug` integration , <a href="docs/toollist.md">please click this link</a>.
-
-<br>
-<br>
-
-# [6] How to build it?
+# [5] How to build it?
 
 <br>
 
