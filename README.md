@@ -59,6 +59,8 @@ After the command is executed, the following information will be displayed:
 ```
 df02e84f5233e01309f3188d3ab5622df1c495d0c8b5f2c68247856d9c552625
 
+Debug environment started successfully!
+
 Notice: You can now enter the debugging interface in the following two ways:
         (1) Using a web browser to access http://Localhost's_IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
         (2) Use the command to debug directly on the local host: docker exec -it kube-debug-localhost /bin/bash 
@@ -140,6 +142,8 @@ After the command is executed, the following information will be displayed:
 ```
 df02e84f5233e01309f3188d3ab5622df1c495d0c8b5f2c68247856d9c552625
 
+Debug environment started successfully!
+
 Notice: You can now enter the debugging interface in the following two ways:
         (1) Using a web browser to access http://Localhost's_IP:3080 Debug! (Recommended URL: http://192.168.1.12:3080)
         (2) Use the command to debug directly on the local host: docker exec -it kube-debug-localhost /bin/bash 
@@ -164,6 +168,8 @@ After the command is executed, the following information will be displayed:
 
 ```
 efa3cc35dd414e4217c880fe269f375cd512fe4f5122e0ccc39719c83d8c30e1
+
+Debug environment started successfully!
 
 Notice: You can now enter the debugging interface in the following two ways:
         (1) Using a web browser to access http://Localhost's_IP:38080 Debug! (Recommended URL: http://192.168.1.12:38080) 
@@ -190,11 +196,10 @@ After the command is executed, the following information will be displayed:
 ```
 Preparing kube-debug environment, Please wait! 
 
-Loaded image: cloudnativer/kube-debug:v0.1.0
-
-kube-debug Debugging environment initialization completed!
-
+Checking target k8s-node (192.168.1.13), please wait...
 0d1e548b7f6012dea80e2ccadb8b6ba874fcf20a1a4b914469093e88f85905e3
+
+Debug environment started successfully!
 
 Notice: You can now enter the debugging interface in the following two ways:
         (1) Using a web browser to access http://k8s-node's_IP:38081 Debug! (Recommended URL: http://192.168.1.13:38081)
@@ -222,12 +227,12 @@ After the command is executed, the following information will be displayed:
 Preparing kube-debug environment, Please wait! 
 
 Please wait and enter the password of the target k8s-node host,
-root@192.168.122.52's password: <Enter Password>
-Loaded image: cloudnativer/kube-debug:v0.1.0
+root@192.168.1.15's password: <Enter Password>
 
-kube-debug Debugging environment initialization completed!
-
+Checking target k8s-node (192.168.1.13), please wait...
 4d6b52c485c4c9a5c10c2dffc2c322562acfee6ca73d3e94fd893efddfe36a91
+
+Debug environment started successfully!
 
 Notice: You can now enter the debugging interface in the following two ways:
         (1) Using a web browser to access http://k8s-node's_IP:38082 Debug! (Recommended URL: http://192.168.1.15:38082)
