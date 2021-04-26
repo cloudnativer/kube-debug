@@ -21,7 +21,7 @@ For example, we have downloaded the `kube-debug-x86-v0.1.0.tgz` package.<br>
 
 ```
 # cd ~/
-# wget https://github.com/cloudnativer/kube-debug/releases/download/v0.1.0/kube-debug-x86-v0.1.0.tgz
+# wget https://github.com/cloudnativer/kube-debug/releases/download/v0.1.0/kube-debug-v0.1.0-x86.tgz
 # tar -zxvf kube-debug-x86-v0.1.0.tgz
 # cd ~/kube-debug/
 ```
