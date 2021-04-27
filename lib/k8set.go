@@ -37,6 +37,7 @@ func GetPod(podName string, nameSpace string, kubeConfig string) (string, string
 }
 
 func RunRemoteContainer(hostUsername string, nodeIP string, podIP string, containerID string, kdContainerName string, version string, debugPort int, sudoStr string, sshStr string) {
+    fmt.Println("Checking debugging environment...")
     err1 := ShellExecute(sshStr+hostUsername+"@"+nodeIP+" \" "+sudoStr+" /tmp/kube-debug-init.sh \" ")
     CheckErr(err1)
     containerStr := "host"
@@ -46,10 +47,12 @@ func RunRemoteContainer(hostUsername string, nodeIP string, podIP string, contai
     } else {
         containerCmd = "kube-debug-ttyd -p "+strconv.Itoa(debugPort)+" bash"
     }
+    fmt.Println("Enabling debugging process...")
     err2 := ShellExecute(sshStr+hostUsername+"@"+nodeIP+" \" "+sudoStr+" docker run --rm -itd --name \""+kdContainerName+"\" --net "+containerStr+" --pid "+containerStr+" --privileged cloudnativer/kube-debug:"+version+" "+containerCmd+" \" ")
     CheckErr(err2)
     if ( podIP != "" && podIP != nodeIP ) {
-        err3 := ShellExecute("ssh "+hostUsername+"@"+nodeIP+" \" "+sudoStr+" iptables -t nat -A PREROUTING -p tcp -m tcp --dport "+strconv.Itoa(debugPort)+" -j DNAT --to-destination "+podIP+":3080 -m comment --comment \""+kdContainerName+"\" && "+sudoStr+" iptables -t nat -A POSTROUTING -d "+podIP+"/32 -p tcp -m tcp --sport 3080 -j SNAT --to-source "+nodeIP+" -m comment --comment \""+kdContainerName+"\" \"")
+        fmt.Println("Distributing configuration...")
+        err3 := ShellExecute(sshStr+hostUsername+"@"+nodeIP+" \" "+sudoStr+" iptables -t nat -A PREROUTING -p tcp -m tcp --dport "+strconv.Itoa(debugPort)+" -j DNAT --to-destination "+podIP+":3080 -m comment --comment \""+kdContainerName+"\" && "+sudoStr+" iptables -t nat -A POSTROUTING -d "+podIP+"/32 -p tcp -m tcp --sport 3080 -j SNAT --to-source "+nodeIP+" -m comment --comment \""+kdContainerName+"\" \"")
         CheckErr(err3)
     }
     fmt.Println("\nDebug environment started successfully!")
