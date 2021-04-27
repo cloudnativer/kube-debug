@@ -81,9 +81,9 @@ func main() {
            kdlib.CheckIP(nodeIP)
            kdlib.CheckIP(podIP)
            fmt.Println("Preparing kube-debug environment, Please wait... \n")
-           sudoStr := kdlib.CheckSshLoginSudo(nodeIP, hostUsername, hostHomedir)
+           sudoStr,sshStr := kdlib.CheckSshLoginSudo(nodeIP, hostUsername, hostHomedir)
            kdlib.GenerateRemoteCheck(nodeIP, hostUsername, currentdir, debugPort)
-           kdlib.RunRemoteContainer(hostUsername,nodeIP,podIP,containerID,kdContainerName,VERSION,debugPort, sudoStr)
+           kdlib.RunRemoteContainer(hostUsername,nodeIP,podIP,containerID,kdContainerName,VERSION,debugPort,sudoStr,sshStr)
            fmt.Println("\nNotice: You can now enter the debugging interface in the following two ways:\n        (1) Using a web browser to access http://k8s-node's_IP:"+strconv.Itoa(debugPort)+" Debug! (Recommended URL: http://"+nodeIP+":"+strconv.Itoa(debugPort)+")\n        (2) Login to the target k8s-node host ("+nodeIP+"), debugging with commands: docker exec -it "+kdContainerName+" /bin/bash \n")
 
        case node != "" :
@@ -94,9 +94,9 @@ func main() {
            kdlib.CheckSoft("scp")
            kdlib.CheckSoft("ssh")
            fmt.Println("Preparing kube-debug environment, Please wait... \n")
-           sudoStr := kdlib.CheckSshLoginSudo(node, hostUsername, hostHomedir)
+           sudoStr,sshStr := kdlib.CheckSshLoginSudo(node, hostUsername, hostHomedir)
            kdlib.GenerateRemoteCheck(node, hostUsername, currentdir, debugPort)
-           kdlib.RunRemoteContainer(hostUsername,node,"","",kdContainerName,VERSION,debugPort, sudoStr)
+           kdlib.RunRemoteContainer(hostUsername,node,"","",kdContainerName,VERSION,debugPort,sudoStr,sshStr)
            fmt.Println("\nNotice: You can now enter the debugging interface in the following two ways:\n        (1) Using a web browser to access http://k8s-node's_IP:"+strconv.Itoa(debugPort)+" Debug! (Recommended URL: http://"+node+":"+strconv.Itoa(debugPort)+")\n        (2) Login to the target k8s-node host ("+node+"), debugging with commands: docker exec -it "+kdContainerName+" /bin/bash \n")
 
        case *localhostFlag :

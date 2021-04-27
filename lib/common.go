@@ -68,7 +68,7 @@ func CheckSoft(softname string) {
     }
 }
 
-func CheckSshLoginSudo(nodeIP string, hostUsername string, hostHomedir string)(string){
+func CheckSshLoginSudo(nodeIP string, hostUsername string, hostHomedir string)(string, string){
     sshLoginOut,_ := ShellOutput("ssh "+hostUsername+"@"+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"ls\" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
     if sshLoginOut != "ok\n" {
         _, err := os.Stat(hostHomedir+"/.ssh/id_rsa")
@@ -82,6 +82,7 @@ func CheckSshLoginSudo(nodeIP string, hostUsername string, hostHomedir string)(s
     }
     fmt.Println("Checking target k8s-node ("+nodeIP+"), please wait...")
     var sudoStr string
+    var sshStr string = "ssh "
     if hostUsername != "root" {
         sshSudoOut,_ := ShellOutput("ssh "+hostUsername+"@"+nodeIP+" -o PreferredAuthentications=publickey -o StrictHostKeyChecking=no \"sudo ls \" &> /dev/null && if [ $? -eq 0 ]; then echo \"ok\" ; fi")
         if sshSudoOut != "ok\n" {
@@ -94,8 +95,12 @@ func CheckSshLoginSudo(nodeIP string, hostUsername string, hostHomedir string)(s
         } else {
             sudoStr = "sudo"
         }
+        _,err := ShellOutput("ssh "+hostUsername+"@"+nodeIP+" \" "+sudoStr+" ls \" ")
+        if err != nil {
+            sshStr = "ssh -tt "
+        }
     }
-    return sudoStr
+    return sudoStr,sshStr
 }
 
 func GenerateRemoteCheck(nodeIP string, hostUsername string, dir string,port int) {
