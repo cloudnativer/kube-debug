@@ -1,5 +1,5 @@
 
-A toolbox for debugging Docker container and Kubernetes with visual web UI.
+A toolbox for debugging docker container and kubernetes with visual web UI.
 
 
 ![kube-debug](docs/imgs/kube-debug-logo.jpg)
