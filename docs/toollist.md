@@ -1,4 +1,3 @@
-<br>
 
 # Integrated debugging tool list
 
