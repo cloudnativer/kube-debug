@@ -10,7 +10,7 @@ A toolbox for debugging docker container and kubernetes with visual web UI.
 
 <br>
 
-## 1.1 Download kube-install package file
+## 1.1 Download kube-debug package file
 
 <br>
 
