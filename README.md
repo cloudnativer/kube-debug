@@ -1,5 +1,4 @@
-
-A toolbox for debugging docker container and kubernetes with visual web UI.
+A toolbox for debugging Docker container and Kubernetes with visual web UI.
 
 
 ![kube-debug](docs/imgs/kube-debug-logo.jpg)
@@ -119,6 +118,8 @@ root@localhost:~ #
 root@localhost:~ # 
 root@localhost:~ # 
 ```
+
+kube-debug integrates many debugging tools. You can <a href="docs/toollist.md">click here to see more integrated tool list information</a>.
 
 <br>
 <br>
@@ -275,7 +276,16 @@ The parameters about kube-debug can be viewed using the `kube-debug -help` comma
 <br>
 <br>
 
-# [5] How to build it?
+# [5] Integrated tool list
+
+<br>
+
+kube-debug integrates many debugging tools. You can <a href="docs/toollist.md">click here to see more integrated tool list information</a>.
+
+<br>
+<br>
+
+# [6] How to build it?
 
 <br>
 
