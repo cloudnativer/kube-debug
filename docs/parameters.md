@@ -1,5 +1,7 @@
-<center><font size=5>Parameter introduction of kube-debug</font></center><br>
+
+#Parameter introduction of kube-debug
 <br>
+
 <b>Introduction:</b><br>
 <br>
 The parameters about kube-debug can be viewed using the  `kube-debug -help`  command. <br>
