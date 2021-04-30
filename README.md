@@ -185,7 +185,7 @@ Now you can use a web browser to access `http://192.168.1.12:38080` and enter th
 
 <br>
 
-We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node. Let's debug the kubernetes node with IP `192.168.1.12` , We can perform the following command operations:<br>
+We can use `kube-debug -node <kubernetes node IP>` to debug any kubernetes node. Let's debug the kubernetes node with IP `192.168.1.13` , We can perform the following command operations:<br>
 
 ```
 # cd ~/kube-debug/
@@ -229,11 +229,11 @@ After the command is executed, the following information will be displayed:
 ```
 Preparing kube-debug environment, Please wait! 
 
-Warning: If you don't get through the local ssh key to the target k8s-node (192.168.56.82), please wait and enter the password for target k8s-node!
+Warning: If you don't get through the local ssh key to the target k8s-node (192.168.1.15), please wait and enter the password for target k8s-node!
 Please wait a moment...
 user@192.168.1.15's password: <Enter Password>
 
-Checking target k8s-node (192.168.1.13), please wait...
+Checking target k8s-node (192.168.1.15), please wait...
 Checking debugging environment...
 Enabling debugging process...
 4d6b52c485c4c9a5c10c2dffc2c322562acfee6ca73d3e94fd893efddfe36a91
