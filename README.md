@@ -15,7 +15,7 @@ A toolbox for debugging Docker container and Kubernetes with visual web UI.
 
 You can download the `kube-debug-*.tgz` package from https://github.com/cloudnativer/kube-debug/releases.<br>
 
-For example, we have downloaded the `kube-debug-x86-v0.1.0.tgz` package.<br>
+For example, we have downloaded the `kube-debug-v0.1.0-x86.tgz` package.<br>
 
 
 ```
