@@ -1,4 +1,4 @@
-A toolbox for debugging Docker container and Kubernetes with visual web UI. You can start the debugging journey on any docker container host! It can help you to automatically complete the command line, and has a large number of visual debugging tools.
+A toolbox for debugging Docker container and Kubernetes with visual web UI. You can start the debugging journey on any docker container host! You can use kube-debug to debug the local host, the local container, any kubernetes node and any kubernetes pod of any namespace. It can help you to automatically complete the command line, and has a large number of visual debugging tools.
 
 
 ![kube-debug](docs/imgs/kube-debug-logo.jpg)
